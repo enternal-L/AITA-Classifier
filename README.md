@@ -8,8 +8,6 @@ AITA subreddit classifier, rant us your stories and we will tell if you're ATA o
 
 To run both the frontend and backend of the application, you'll need to have two terminal windows open simultaneously 
 
----
-
 ## Frontend
 
 1. Run the following commands:
