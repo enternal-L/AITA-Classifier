@@ -1,6 +1,6 @@
 # AITA Classifier
 
-AITA subreddit classifier, rant us your stories and we will tell if you're ATA or NTA!
+AITA subreddit classifier, rant us your stories and we will tell if you ATA or NTA!
 
 ---
 
