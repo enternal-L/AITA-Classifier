@@ -1,2 +1,0 @@
-i'm still setting up fast api to react, 
-this will contain insturction of the setup
