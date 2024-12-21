@@ -13,7 +13,7 @@ To run both the frontend and backend of the application, you'll need to have two
 1. Run the following commands:
     ```bash
    cd @AITA-Classifier/frontend
-   run npm run dev
+   npm run dev
 
 ## Backend
 
