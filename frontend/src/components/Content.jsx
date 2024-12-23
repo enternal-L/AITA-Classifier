@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 const Content = ({ onSubmit }) => {
     const [message, setMessage] = useState("")
-
+    // message is what we're typing in
 
     return (
         <>

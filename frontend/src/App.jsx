@@ -15,8 +15,6 @@ function App() {
         const response = await api.post('/chats', {
           content: chat
         });
-
-        console.log(response.data)
     }
 
     catch(error){
@@ -27,8 +25,10 @@ function App() {
   const fetchChat = async () => {
     try {
         const response = await api.get('/chats');
-        setChats(response.data)
-        console.log("get chat correctly")
+        // send get request to /chats endpoint
+        setChats(response.data.chats)
+        // we're getting the class Chat where the member variable chats stores the chats
+        console.log("Retrieved chat!")
     }
 
     catch(error){
@@ -36,35 +36,16 @@ function App() {
     }
   }
 
-  const fetchFruits = async () => {
-    try {
-        const response = await api.get('/fruits');
-        setFruits(response.data);
-
-        console.log(response)
-
-    }
-    catch (error){
-      console.log("Error Occured", error)
-    }
-  }
-
-
   return (
     <>
       <Content onSubmit={addChat}/>
-      <button onClick={() => {fetchChat}}>Get Chats</button>
+      {/* we're passing in the function to be called in the component */}
+
+      <button onClick={() => {fetchChat()}}>Get Chats</button> 
+      {/* we're directly calling the function */}
+    
       <History chats={chats}/>
-      <button onClick={() => {fetchFruits}}>
-          Click me!
-      </button>
-      <div>
-        {
-          fruits && fruits.map((item, index) => (
-            <p key = {index}>{item}</p>
-          ))
-        }
-      </div>
+      {/* displays chat history after retrieving it */}
     </>
   )
 }
