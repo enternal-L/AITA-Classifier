@@ -1,6 +1,8 @@
 import praw
 from dotenv import load_dotenv
 import os
+import time
+import csv   
 
 load_dotenv()
 
@@ -12,7 +14,23 @@ reddit = praw.Reddit(
 
 print(reddit.read_only)
 
-for submission in reddit.subreddit("AmItheAsshole").top(time_filter = "year", limit=100):
+count = 0
+
+for submission in reddit.subreddit("AmItheAsshole").top(time_filter = "year", limit=20000):
+    print(count)
+    count += 1
+    time.sleep(0.02)
     if (submission.link_flair_text == "None" or submission.link_flair_text == "UPDATE"):
+        print("skipping")
         continue
-    print(submission.link_flair_text)
+    fields=[submission.link_flair_text,submission.title,submission.selftext]
+    with open(r'aita20000-posts.csv', 'a') as f:
+        writer = csv.writer(f)
+        writer.writerow(fields)
+    # print(submission.link_flair_text + " " + submission.title + " " + submission.selftext)
+
+
+# fields=['first','second','third']
+# with open(r'test.csv', 'a') as f:
+#     writer = csv.writer(f)
+#     writer.writerow(fields)
