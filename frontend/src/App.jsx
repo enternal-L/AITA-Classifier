@@ -1,12 +1,40 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
-import './App.css'
 import api from "./api.js"
 
+import Content from './components/content.jsx'
+import History from './components/History.jsx'
+
 function App() {
-  const [count, setCount] = useState(0)
   const [fruits, setFruits] = useState([])
+  const [chats, setChats] = useState([])
+
+  const addChat = async (chat) => {
+    try {
+        const response = await api.post('/chats', {
+          content: chat
+        });
+
+        console.log(response.data)
+    }
+
+    catch(error){
+      console.log("Error Occured", error)
+    }
+  }
+
+  const fetchChat = async () => {
+    try {
+        const response = await api.get('/chats');
+        setChats(response.data)
+        console.log("get chat correctly")
+    }
+
+    catch(error){
+      console.log("Error Occured", error)
+    }
+  }
 
   const fetchFruits = async () => {
     try {
@@ -24,7 +52,10 @@ function App() {
 
   return (
     <>
-      <button onClick={fetchFruits}>
+      <Content onSubmit={addChat}/>
+      <button onClick={() => {fetchChat}}>Get Chats</button>
+      <History chats={chats}/>
+      <button onClick={() => {fetchFruits}}>
           Click me!
       </button>
       <div>
