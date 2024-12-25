@@ -1,26 +1,37 @@
 import React from 'react'
 import { useState } from 'react'
+import arrow from '../assets/arrow.svg'
 
-const Content = ({ onSubmit }) => {
+const Content = ({ onSubmit, fetchChat }) => {
     const [message, setMessage] = useState("")
     // message is what we're typing in
 
+    const handleKeyDown = (event) => {
+        if(event.key === "Enter" && message !== ""){
+            event.preventDefault();
+
+            console.log("Enter is submitting", message);
+
+            onSubmit(message);
+            fetchChat();
+        }
+    }
+
     return (
-        <div className="app flex justify-center items-center h-screen bg-white">
-            <div className="text-center space-y-6">
-                <p className="text-lg font-semibold text-gray-700">Are you the AH?</p>
-                <input
-                    className="w-80 p-3 rounded-md bg-[#d3b894] text-gray-800 placeholder-gray-500 shadow focus:outline-none focus:ring-2 focus:ring-[#c5a376]"
-                    type="text"
-                    placeholder="start yapping here...."
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    />
-                <button
-                    className="hidden" // Hides the button while keeping the layout functional
-                    onClick={() => {
-                        onSubmit(message);}}
-                ></button>
+        <div className="flex justify-center items-center bg-white h-[60%]">
+            <div className="text-center space-y-6 flex flex-col">
+                <p className="text-5xl font-semibold text-gray-700 font-sans">Are you the AH?</p>
+                <div className="flex flex-row">
+                    <input
+                        className="w-96 h-12 px-3 pt-2 rounded-md bg-[#d3b894] placeholder-[#3F3E3E] outline-none"
+                        type="text"
+                        placeholder="start yapping here...."
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                        onKeyDown = {handleKeyDown}
+                        />
+                    <img src= {arrow} className="size-6" onClick={() => {onSubmit(message); fetchChat()}}></img>
+                </div>
             </div>
         </div>
     )
