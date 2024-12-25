@@ -5,6 +5,7 @@ import api from "./api.js"
 
 import Content from './components/content.jsx'
 import History from './components/History.jsx'
+import Nav from './components/Nav.jsx'
 
 function App() {
   const [fruits, setFruits] = useState([])
@@ -38,6 +39,7 @@ function App() {
 
   return (
     <>
+      <Nav></Nav>
       <Content onSubmit={addChat}/>
       {/* we're passing in the function to be called in the component */}
 
@@ -46,6 +48,10 @@ function App() {
     
       <History chats={chats}/>
       {/* displays chat history after retrieving it */}
+
+      <div className="bg-blue-500 text-white p-4">
+        Hello, Tailwind!
+      </div>
     </>
   )
 }
