@@ -44,9 +44,6 @@ function App() {
 
       {/* <button onClick={() => {fetchChat()}}>Get Chats</button>  */}
       {/* we're directly calling the function */}
-    
-      <History chats={chats}/>
-      {/* displays chat history after retrieving it */}
     </div>
   )
 }
