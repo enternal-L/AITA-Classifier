@@ -1,8 +1,14 @@
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: [],
+// @type {import('tailwindcss').Config}
+module.exports = {
+  content: [
+    './src/**/*.{js,jsx,ts,tsx}',
+  ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['Average Sans', 'sans-serif'],
+      },
+    },
   },
   plugins: [],
 }

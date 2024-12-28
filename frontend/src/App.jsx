@@ -5,9 +5,9 @@ import api from "./api.js"
 
 import Content from './components/content.jsx'
 import History from './components/History.jsx'
+import Nav from './components/Nav.jsx'
 
 function App() {
-  const [fruits, setFruits] = useState([])
   const [chats, setChats] = useState([])
 
   const addChat = async (chat) => {
@@ -37,16 +37,17 @@ function App() {
   }
 
   return (
-    <>
-      <Content onSubmit={addChat}/>
+    <div className='app flex flex-col'>
+      <Nav></Nav>
+      <Content onSubmit={addChat} fetchChat={fetchChat}/>
       {/* we're passing in the function to be called in the component */}
 
-      <button onClick={() => {fetchChat()}}>Get Chats</button> 
+      {/* <button onClick={() => {fetchChat()}}>Get Chats</button>  */}
       {/* we're directly calling the function */}
     
       <History chats={chats}/>
       {/* displays chat history after retrieving it */}
-    </>
+    </div>
   )
 }
 
