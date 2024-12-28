@@ -3,7 +3,8 @@ from dotenv import load_dotenv
 import os
 import time
 import csv   
-
+import requests
+import datetime
 load_dotenv()
 
 reddit = praw.Reddit(
@@ -16,18 +17,27 @@ print(reddit.read_only)
 
 count = 0
 
-for submission in reddit.subreddit("AmItheAsshole").top(time_filter = "year", limit=20000):
-    print(count)
-    count += 1
-    time.sleep(0.02)
-    if (submission.link_flair_text == "None" or submission.link_flair_text == "UPDATE"):
-        print("skipping")
-        continue
-    fields=[submission.link_flair_text,submission.title,submission.selftext]
-    with open(r'aita20000-posts.csv', 'a') as f:
-        writer = csv.writer(f)
-        writer.writerow(fields)
-    # print(submission.link_flair_text + " " + submission.title + " " + submission.selftext)
+
+
+count = 0
+submission = reddit.subreddit("AskReddit").random()
+print(submission.title)
+
+# for submission in reddit.subreddit("AmItheAsshole").controversial(time_filter = "year", limit=20000):
+#     print(count)
+#     count += 1
+#     time.sleep(0.01)
+
+#     if (submission.link_flair_text == "None" or submission.link_flair_text == "UPDATE"):
+#         print("skipping")
+#         continue
+
+#     fields=[submission.link_flair_text,submission.title,submission.selftext]
+
+    # with open(r'aita-base copy.csv', 'a') as f:
+    #     writer = csv.writer(f)
+    #     writer.writerow(fields)
+    
 
 
 # fields=['first','second','third']
