@@ -12,9 +12,6 @@ const Content = ({ onSubmit, fetchChat, color, setColor }) => {
     const handleKeyDown = (event) => {
         if(event.key === "Enter" && message !== ""){
             event.preventDefault();
-
-            console.log("Enter is submitting", message);
-
             sendData(message)
         }
     }
@@ -30,7 +27,7 @@ const Content = ({ onSubmit, fetchChat, color, setColor }) => {
             
             setPercent([yta.toFixed(2), nta.toFixed(2)])
             
-            yta > nta ? console.log("is the asshole") : console.log("not the asshole")
+            yta > nta ? console.log("Is the asshole") : console.log("Not the asshole")
             nta > yta ? setColor("#83D1AA") : setColor("#FFB2B2")
         }
     
@@ -65,7 +62,7 @@ const Content = ({ onSubmit, fetchChat, color, setColor }) => {
                     </div>
                 </div>
             </div>
-            <History percentage={percent}/>
+            <History percentage={percent} color={color}/>
         </div>
     )
 }

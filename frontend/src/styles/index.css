@@ -41,10 +41,10 @@
   @apply bg-[#D9C2A4];
 }
 
-.background-yes {
+.background-no {
   background-color: rgba(131, 209, 170, 0.2); /* #83D1AA with 20% opacity */
 }
 
-.abackground-no {
+.background-yes {
   background-color: rgba(255, 178, 178, 0.2); /* #FFB2B2 with 20% opacity */
 }
