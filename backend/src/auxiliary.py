@@ -78,13 +78,13 @@ def data_init():
     # ------------------------------------------------------
     # For each label C, the number of posts with that label.
     # ------------------------------------------------------
-
+    global num_posts_with_label
     num_posts_with_label = df['Label'].value_counts().to_dict()
 
-    for key, value in num_posts_with_label.items():
-        print(f"{key}, {value}")
+    # for key, value in num_posts_with_label.items():
+    #     print(f"{key}, {value}")
 
-
+data_init()
 
 # unique_words: set of words
     # labels: set of labels
