@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import arrow from '../assets/arrow.svg'
 import History from './History'
+import api from "../api.js"
 
 const Content = ({ onSubmit, fetchChat }) => {
     const [message, setMessage] = useState("")
@@ -19,6 +20,25 @@ const Content = ({ onSubmit, fetchChat }) => {
         }
     }
 
+    const sendData = async () => {
+        try{
+            const response = await api.post("/classify", {
+              "message": message
+            });
+
+            console.log(response.data)
+
+            yta = response.data[0]
+            nta = response.data[1]
+            
+            setPercent([yta, nta])
+        }
+    
+        catch(error){
+          console.log("Error Occured", error)
+        }
+      }
+
     return (
         <div className="flex-center bg-white h-[93%] flex-col">
             <div className="text-center space-y-6 flex flex-col m-4">
@@ -29,15 +49,18 @@ const Content = ({ onSubmit, fetchChat }) => {
                         placeholder="start yapping here..."
                         value={message}
                         onChange={(e) => {
-                        setMessage(e.target.value);
-                        e.target.style.height = 'auto'; // Reset height to calculate scrollHeight
-                        e.target.style.height = `${e.target.scrollHeight}px`; // Adjust to text content
+                            setMessage(e.target.value);
+                            e.target.style.height = 'auto'; // Reset height to calculate scrollHeight
+                            e.target.style.height = `${e.target.scrollHeight}px`; // Adjust to text content
                         }}
                         onKeyDown={handleKeyDown}
                         rows={2} // Initial row size
                     />
                     <div className='w-full h-11 flex-end p-2'>
-                        <img src= {arrow} className="w-6 h-6 cursor-pointer" onClick={() => {onSubmit(message); fetchChat(); setPercent([30, 70])}}></img>
+                        {message.length > 0 && 
+                        <img src= {arrow} className="w-6 h-6 cursor-pointer" onClick={() => {
+                            sendData();
+                        }}></img>}
                     </div>
                 </div>
             </div>

@@ -4,11 +4,12 @@ import viteLogo from '/vite.svg'
 import api from "./api.js"
 
 import Content from './components/content.jsx'
-import History from './components/History.jsx'
-import Nav from './components/Nav.jsx'
+import Nav from './components/nav.jsx'
 
 function App() {
   const [chats, setChats] = useState([])
+  const colors = ["#D9C2A4","#FFB2B2", "#83D1AA"]
+  const [color, setColor] = useState(colors[0])
 
   const addChat = async (chat) => {
     try {

@@ -1,9 +1,9 @@
 import React from 'react'
 
-const History = ({chats, percentage}) => {
+const History = ({percentage}) => {
 
-  const percent_yes = percentage[1]
-  const percent_no = percentage[0]
+  const percent_yes = percentage[0]
+  const percent_no = percentage[1]
 
   return (
     <>

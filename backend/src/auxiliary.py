@@ -20,7 +20,7 @@ from collections import defaultdict
 # Get the total number of posts in the entire training set.
 # ---------------------------------------------------------
 
-df = pd.read_csv("../aita-base-filtered.csv")
+df = pd.read_csv("aita-base-filtered.csv")
 total_num_posts = len(df)
 
 # ---------------------------------------------------------------------------------
