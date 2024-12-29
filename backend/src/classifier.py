@@ -1,7 +1,7 @@
 from auxiliary import num_posts_with_label, words_count, labeled_words_count, total_num_posts, unique_words, nta_unique_words, yta_unique_words, remove_punctuation
 import math 
 import numpy as np
-
+from decimal import Decimal, getcontext
 # Determine the most likely label
 
 def classify(text_input):
@@ -16,9 +16,7 @@ def classify(text_input):
     total_lp_yta = 0
 
     # Calculate log-prior probability of label C 
-    print(len(num_posts_with_label))
-    for key, value in num_posts_with_label.items():
-        print(f"{key}, {value}")
+
     total_lp_nta += math.log(num_posts_with_label['Not the A-hole'] * 1.0 / total_num_posts)
     total_lp_yta += math.log(num_posts_with_label['Asshole'] * 1.0 / total_num_posts)
 
@@ -47,9 +45,14 @@ def classify(text_input):
             total_lp_nta += math.log(labeled_words_count[('Not the A-hole', word)] * 1.0 / num_posts_with_label['Not the A-hole'])
             total_lp_yta += math.log(labeled_words_count[('Asshole', word)] * 1.0 / num_posts_with_label['Asshole'])
 
-    nta_prob = np.exp(total_lp_nta)
-    yta_prob = np.exp(total_lp_yta)
+    getcontext().prec = 50
 
+    nta_prob = Decimal(total_lp_nta).exp()
+    yta_prob = Decimal(total_lp_yta).exp()
+    # print(total_lp_nta)
+    # print(total_lp_yta)
+    # print(nta_prob)
+    # print(yta_prob)
     # Normalize probabilities
     sum_probs = nta_prob + yta_prob
     nta_prob /= sum_probs
