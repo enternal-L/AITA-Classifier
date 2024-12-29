@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import api from "./api.js"
 
 import Content from './components/content.jsx'
@@ -8,8 +6,7 @@ import Nav from './components/nav.jsx'
 
 function App() {
   const [chats, setChats] = useState([])
-  const colors = ["#D9C2A4","#FFB2B2", "#83D1AA"]
-  const [color, setColor] = useState(colors[0])
+  const [color, setColor] = useState("#D9C2A4")
 
   const addChat = async (chat) => {
     try {
@@ -39,8 +36,8 @@ function App() {
 
   return (
     <div className='app flex flex-col'>
-      <Nav></Nav>
-      <Content onSubmit={addChat} fetchChat={fetchChat}/>
+      <Nav color={color}></Nav>
+      <Content onSubmit={addChat} fetchChat={fetchChat} color={color} setColor ={setColor}/>
       {/* we're passing in the function to be called in the component */}
 
       {/* <button onClick={() => {fetchChat()}}>Get Chats</button>  */}

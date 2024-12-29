@@ -6,8 +6,18 @@ from typing import List
 # from auxiliary import num_posts_with_label, words_count, labeled_words_count, total_num_posts, unique_words, nta_unique_words, yta_unique_words, remove_punctuation
 from auxiliary import data_init
 from classifier import classify
+from contextlib import asynccontextmanager
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup logic
+    await data_init()
+    print("Server startup logic executed.")
+    yield  # This allows the app to run
+    # Shutdown logic
+    print("Server shutdown logic executed.")
+
+app = FastAPI(lifespan=lifespan)
 
 origins = [
     "http://localhost:5173"
@@ -30,11 +40,6 @@ class Chats(BaseModel):
 memory_db = {"chats":[]}
 
 # sample backend app
-@app.on_event("startup")
-async def start_up():
-    data_init()
-
-
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
@@ -53,9 +58,9 @@ def add_chat(msg : Chat):
     return {"message": "Message added correctly"}
 
 @app.post("/classify")
-def do_calc(msg: str):
+async def do_calc(msg : Chat):
     # call calculation helper function
-    probability = classify(msg)
+    probability = await classify(msg.content)
     return {"message": "Message log probability calculated", "data": probability}
 
 if __name__ == "__main__":

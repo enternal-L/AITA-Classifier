@@ -84,8 +84,6 @@ def data_init():
     # for key, value in num_posts_with_label.items():
     #     print(f"{key}, {value}")
 
-data_init()
-
 # unique_words: set of words
     # labels: set of labels
     # num_posts_with_label: dict of key (label) to value (count)

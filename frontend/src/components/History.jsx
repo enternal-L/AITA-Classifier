@@ -1,9 +1,10 @@
 import React from 'react'
 
-const History = ({percentage}) => {
+const History = ({percentage, color}) => {
 
   const percent_yes = percentage[0]
   const percent_no = percentage[1]
+  const backgroundColor = color == "#83D1AA" ? "background-yes" : "background-no"
 
   return (
     <>
@@ -19,7 +20,7 @@ const History = ({percentage}) => {
               } */}
               {
                 percentage.length > 0 && 
-                <div className='w-96 h-full background-yes rounded-md p-4 space-y-3'>
+                <div className={`w-96 h-full ${backgroundColor} rounded-md p-4 space-y-3`}>
                   <div className={`w-[${percent_yes}%] bg-[#83D1AA] rounded-r-md p-2 flex justify-between`}>
                       <p>{percent_yes}%</p>
                       <p>AH</p>

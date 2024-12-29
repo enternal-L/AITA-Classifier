@@ -4,7 +4,7 @@ import arrow from '../assets/arrow.svg'
 import History from './History'
 import api from "../api.js"
 
-const Content = ({ onSubmit, fetchChat }) => {
+const Content = ({ onSubmit, fetchChat, color, setColor }) => {
     const [message, setMessage] = useState("")
     const [percent, setPercent] = useState([])
     // message is what we're typing in
@@ -15,15 +15,14 @@ const Content = ({ onSubmit, fetchChat }) => {
 
             console.log("Enter is submitting", message);
 
-            onSubmit(message);
-            fetchChat();
+            sendData(message)
         }
     }
 
-    const sendData = async () => {
+    const sendData = async (message) => {
         try{
             const response = await api.post("/classify", {
-              "message": message
+              content: message
             });
 
             console.log(response.data)
@@ -32,6 +31,8 @@ const Content = ({ onSubmit, fetchChat }) => {
             nta = response.data[1]
             
             setPercent([yta, nta])
+
+            yta > nta ? setColor("#83D1AA") : setColor("#FFB2B2")
         }
     
         catch(error){
@@ -43,9 +44,10 @@ const Content = ({ onSubmit, fetchChat }) => {
         <div className="flex-center bg-white h-[93%] flex-col">
             <div className="text-center space-y-6 flex flex-col m-4">
                 <p className="text-5xl font-semibold text-gray-700 font-sans">Are you the AH?</p>
-                <div className="w-96 min-h-24 flex flex-col flex-grow rounded-md bg-[#d3b894]">
+                <div className="w-96 min-h-24 flex flex-col flex-grow rounded-md" style={{ backgroundColor: color }}>
                     <textarea
-                        className="w-full h-3/5 px-3 p-2 rounded-md bg-[#d3b894] placeholder-[#3F3E3E] outline-none resize-none overflow-hidden"
+                        className="w-full h-3/5 px-3 p-2 rounded-md placeholder-[#3F3E3E] outline-none resize-none overflow-hidden"
+                        style={{ backgroundColor: color }}
                         placeholder="start yapping here..."
                         value={message}
                         onChange={(e) => {
@@ -59,7 +61,7 @@ const Content = ({ onSubmit, fetchChat }) => {
                     <div className='w-full h-11 flex-end p-2'>
                         {message.length > 0 && 
                         <img src= {arrow} className="w-6 h-6 cursor-pointer" onClick={() => {
-                            sendData();
+                            sendData(message);
                         }}></img>}
                     </div>
                 </div>
