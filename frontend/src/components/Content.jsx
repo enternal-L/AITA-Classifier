@@ -25,14 +25,13 @@ const Content = ({ onSubmit, fetchChat, color, setColor }) => {
               content: message
             });
 
-            console.log(response.data)
-
-            yta = response.data[0]
-            nta = response.data[1]
+            const yta = response.data.data.yta * 100
+            const nta = response.data.data.nta * 100
             
-            setPercent([yta, nta])
-
-            yta > nta ? setColor("#83D1AA") : setColor("#FFB2B2")
+            setPercent([yta.toFixed(2), nta.toFixed(2)])
+            
+            yta > nta ? console.log("is the asshole") : console.log("not the asshole")
+            nta > yta ? setColor("#83D1AA") : setColor("#FFB2B2")
         }
     
         catch(error){

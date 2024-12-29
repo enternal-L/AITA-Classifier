@@ -21,15 +21,21 @@ const History = ({percentage, color}) => {
               {
                 percentage.length > 0 && 
                 <div className={`w-96 h-full ${backgroundColor} rounded-md p-4 space-y-3`}>
-                  <div className={`w-[${percent_yes}%] bg-[#83D1AA] rounded-r-md p-2 flex justify-between`}>
-                      <p>{percent_yes}%</p>
-                      <p>AH</p>
-                  </div>
-                  <div className={`w-[${percent_no}%] bg-[#FFB2B2] rounded-r-md p-2 flex justify-between`}>
-                      <p>{percent_no}%</p>
-                      <p>NTAH</p>
-                  </div>
+                <div 
+                    style={{ width: `${Math.round(percent_yes)}%` }} 
+                    className="bg-[#FFB2B2] rounded-r-md p-2 flex justify-between"
+                >
+                    <p>{percent_yes}%</p>
+                    <p>AH</p>
                 </div>
+                <div 
+                    style={{ width: `${Math.round(percent_no)}%` }} 
+                    className="bg-[#83D1AA] rounded-r-md p-2 flex justify-between"
+                >
+                    <p>{percent_no}%</p>
+                    <p>NTAH</p>
+                </div>
+            </div>
               }
             </div>
         </div>

@@ -3,16 +3,17 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
-# from auxiliary import num_posts_with_label, words_count, labeled_words_count, total_num_posts, unique_words, nta_unique_words, yta_unique_words, remove_punctuation
-from auxiliary import data_init
-from classifier import classify
+from classifier import Classifier
 from contextlib import asynccontextmanager
+
+
+#Instantiating the class
+classifier = Classifier()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup logic
-    await data_init()
-    print("Server startup logic executed.")
+    classifier.data_init()
     yield  # This allows the app to run
     # Shutdown logic
     print("Server shutdown logic executed.")
@@ -59,9 +60,11 @@ def add_chat(msg : Chat):
 
 @app.post("/classify")
 async def do_calc(msg : Chat):
+
     # call calculation helper function
-    probability = await classify(msg.content)
-    return {"message": "Message log probability calculated", "data": probability}
+    probability = classifier.classify(msg.content)
+
+    return {"message": "Message log probability calculated", "data": {"nta": probability[0], "yta": probability[1]}}
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8080)
