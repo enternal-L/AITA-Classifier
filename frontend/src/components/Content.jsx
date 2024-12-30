@@ -10,7 +10,7 @@ const Content = ({ onSubmit, fetchChat, color, setColor }) => {
     // message is what we're typing in
 
     const handleKeyDown = (event) => {
-        if(event.key === "Enter" && message !== ""){
+        if(event.key === "Enter" && message.trim() !== ""){
             event.preventDefault();
             sendData(message)
         }
@@ -40,10 +40,9 @@ const Content = ({ onSubmit, fetchChat, color, setColor }) => {
         <div className="flex-center bg-white h-[93%] flex-col">
             <div className="text-center space-y-6 flex flex-col m-4">
                 <p className="text-5xl font-semibold text-gray-700 font-sans">Are you the AH?</p>
-                <div className="w-96 min-h-24 flex flex-col flex-grow rounded-md" style={{ backgroundColor: color }}>
+                <div className="w-96 min-h-24 flex flex-col flex-grow rounded-md transition-colors duration-500 ease-in-out" style={{ backgroundColor: color }}>
                     <textarea
-                        className="w-full h-3/5 px-3 p-2 rounded-md placeholder-[#3F3E3E] outline-none resize-none overflow-hidden"
-                        style={{ backgroundColor: color }}
+                        className="w-full px-3 p-2 rounded-md placeholder-[#3F3E3E] outline-none resize-none overflow-hidden bg-transparent"
                         placeholder="start yapping here..."
                         value={message}
                         onChange={(e) => {
