@@ -64,7 +64,7 @@ async def do_calc(msg : Chat):
     # call calculation helper function
     probability = classifier.classify(msg.content)
 
-    return {"message": "Message log probability calculated", "data": {"nta": probability[0], "yta": probability[1]}}
+    return {"message": "Message log probability calculated", "nta": probability[0], "yta": probability[1], "solo": classifier.word_personal_prob, "chat": msg.content}
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8080)

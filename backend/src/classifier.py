@@ -22,6 +22,8 @@ class Classifier():
 
         self.total_num_posts = 0
 
+        self.word_personal_prob = defaultdict(int)
+
     def data_init(self):
         # ---------------------------------------------------------
         # Get the total number of posts in the entire training set.
@@ -82,32 +84,50 @@ class Classifier():
         total_lp_nta += math.log(self.num_posts_with_label['Not the A-hole'] * 1.0 / self.total_num_posts)
         total_lp_yta += math.log(self.num_posts_with_label['Asshole'] * 1.0 / self.total_num_posts)
 
+        getcontext().prec = 50
+
         # Calculate log-likelihood of word 
         for word in bag_of_words:
             # If word doesn't occur anywhere at all in the training set
-            if word not in self.unique_words:
-                print(f"A {math.log(1.0/self.total_num_posts)}")
 
-                total_lp_nta += math.log(1.0/self.total_num_posts)
-                total_lp_yta += math.log(1.0/self.total_num_posts)
+            nta_value = 0
+            yta_value = 0
+            
+            if word not in self.unique_words:
+
+                yta_value, nta_value = math.log(1.0/self.total_num_posts)
+
+                total_lp_nta += yta_value
+                total_lp_yta += nta_value
 
             elif word not in self.nta_unique_words:
-                print(f"B {math.log(self.words_count[word] * 1.0 / self.total_num_posts)}")
 
-                total_lp_nta += math.log(self.words_count[word] * 1.0 / self.total_num_posts)
+                nta_value = math.log(self.words_count[word] * 1.0 / self.total_num_posts)
+
+                total_lp_nta += nta_value
             
             elif word not in self.yta_unique_words:
-                print(f"C {math.log(self.words_count[word] * 1.0 / self.total_num_posts)}")
+                
+                yta_value = math.log(self.words_count[word] * 1.0 / self.total_num_posts)
 
-                total_lp_yta += math.log(self.words_count[word] * 1.0 / self.total_num_posts)
+                total_lp_yta += yta_value
 
             else:
-                print(f"D {math.log(self.labeled_words_count[('Not the A-hole', word)] * 1.0 / self.num_posts_with_label['Not the A-hole'])} | {math.log(self.labeled_words_count[('Asshole', word)] * 1.0 / self.num_posts_with_label['Asshole'])}")
+                nta_value = math.log(self.labeled_words_count[('Not the A-hole', word)] * 1.0 / self.num_posts_with_label['Not the A-hole'])
+                yta_value = math.log(self.labeled_words_count[('Asshole', word)] * 1.0 / self.num_posts_with_label['Asshole'])
 
-                total_lp_nta += math.log(self.labeled_words_count[('Not the A-hole', word)] * 1.0 / self.num_posts_with_label['Not the A-hole'])
-                total_lp_yta += math.log(self.labeled_words_count[('Asshole', word)] * 1.0 / self.num_posts_with_label['Asshole'])
+                total_lp_nta += nta_value
+                total_lp_yta += yta_value
 
-        getcontext().prec = 50
+            nta_value = Decimal(nta_value).exp()
+            yta_value = Decimal(yta_value).exp()
+
+            sum_value = nta_value + yta_value
+
+            nta_value /= sum_value
+            yta_value /= sum_value
+            
+            self.word_personal_prob[word] = [nta_value, yta_value]
 
         nta_prob = Decimal(total_lp_nta).exp()
         yta_prob = Decimal(total_lp_yta).exp()
