@@ -21,3 +21,7 @@ To run both the frontend and backend of the application, you'll need to have two
     ```bash
    cd @AITA-Classifier/backend
    python src/main.py
+
+---
+
+![image](https://github.com/user-attachments/assets/3de80959-dd08-4f28-a4ad-4f3d3a2a7481)
